@@ -429,6 +429,41 @@
   .form-feedback.success { background: var(--green-light); color: var(--green); border: 1px solid rgba(26,122,74,0.2); }
   .form-feedback.error { background: #fff0f0; color: #c0392b; border: 1px solid #f5b7b1; }
 
+  /* ── BALLET HERO VARIANT ── */
+  .course-hero.ballet {
+    background: linear-gradient(160deg, #1a0a14 0%, #3d1230 45%, #7a1f5a 78%, #c45a8a 100%);
+  }
+  .course-hero.ballet .hero-glow {
+    background: radial-gradient(ellipse 65% 55% at 70% 38%, rgba(220,80,160,0.38) 0%, transparent 68%),
+                radial-gradient(ellipse 42% 42% at 22% 62%, rgba(160,40,120,0.28) 0%, transparent 70%);
+  }
+
+  /* ── COURSE FEATURES LIST ── */
+  .feature-list {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .feature-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-item:last-child { border-bottom: none; }
+  .feature-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, #c45a8a, #7a1f5a);
+    color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .feature-text { font-size: 14px; color: var(--text-primary); line-height: 1.6; }
+  .feature-text strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+
   /* ── SUMMER CAMP HERO VARIANT ── */
   .course-hero.summer {
     background: linear-gradient(160deg, #0a1a0a 0%, #0d3020 40%, #1a6e3a 75%, #e8a020 100%);
@@ -465,6 +500,7 @@
   <div class="tabs-inner">
     <button class="tab-btn active" data-tab="tab-mv">兒童MV專攻班</button>
     <button class="tab-btn" data-tab="tab-summer">兒童MV夏令營</button>
+    <button class="tab-btn" data-tab="tab-ballet">成人芭蕾</button>
   </div>
 </div>
 
@@ -740,6 +776,166 @@
   </div>
 </div>
 
+<!-- ══ PANEL: 成人芭蕾 ══ -->
+<div class="panel" id="tab-ballet">
+  <div class="page-wrap">
+
+    <!-- HERO -->
+    <div class="course-hero ballet">
+      <div class="hero-glow"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-content">
+        <div class="hero-badge">🩰 零基礎友善</div>
+        <h1 class="hero-title">成人芭蕾<br>期課班</h1>
+        <p class="hero-sub">無須任何舞蹈背景即可入門。課程結合音樂與肢體，透過把杆與核心訓練，有效改善駝背、雕塑體態，大幅提升柔軟度與協調性。</p>
+      </div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">課程費用</div>
+        <div class="info-card-value big">NT$3,600</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">課堂數</div>
+        <div class="info-card-value big">8 堂</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">上課日期</div>
+        <div class="info-card-value">2026/7/3 (五)<br>~2026/8/21 (五)</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">上課時間</div>
+        <div class="info-card-value">14:00 – 15:30</div>
+      </div>
+    </div>
+
+    <!-- COURSE FEATURES -->
+    <h3 style="font-size:17px;font-weight:600;letter-spacing:-0.3px;margin-bottom:14px;color:var(--text-primary)">課程特色</h3>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feature-num">1</div>
+        <div class="feature-text">
+          <strong>建立身體素質與核心控制</strong>
+          從基礎姿態出發，系統性強化核心肌群，改善駝背體態，為芭蕾動作打下穩固根基。
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">2</div>
+        <div class="feature-text">
+          <strong>把杆練習與芭蕾基本動作訓練</strong>
+          透過把杆輔助，學習芭蕾五個基本位置、Plié、Tendu 等經典動作，兼顧安全與正確性。
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-num">3</div>
+        <div class="feature-text">
+          <strong>中間與流動組合訓練</strong>
+          強化穩定、控制與音樂性，將動作延伸至中間練習，感受芭蕾優雅流動的律動感。
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--accent-light);border-radius:var(--radius-xs);padding:14px 18px;margin-bottom:28px;font-size:14px;color:var(--accent);font-weight:500;line-height:1.6;">
+      🎯 課程以系統性累積為核心，適合長期養成，歡迎完全零基礎的成人加入。
+    </div>
+
+    <!-- PAYMENT NOTICE -->
+    <div class="notice-box">
+      <div class="notice-title">💳 報名須先完成匯款</div>
+      <p>請先匯款 <strong>3,600元／人</strong> 到以下帳戶，以匯款作為報名依據。</p>
+      <div class="account-box">
+        <div class="label">匯款帳號</div>
+        <div class="number">台灣企銀（050）84162122729</div>
+      </div>
+    </div>
+
+    <!-- LINE NOTICE -->
+    <div class="line-box">
+      <div class="line-icon">💬</div>
+      <p>
+        匯款後請加入官方 Line@<br>
+        <span class="line-id">@jennylin</span>
+        <br>告知小編您已匯款，確認無誤後才算報名完成。
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- REGISTRATION FORM -->
+    <div class="form-card">
+      <div id="feedback-ballet" class="form-feedback"></div>
+      <h2 class="form-card-title">填寫報名資料</h2>
+      <p class="form-card-sub">請確認已完成匯款後再填寫此表單，我們將以 Email 發送報名確認通知。</p>
+
+      <form id="form-ballet" novalidate>
+        <div class="form-grid">
+
+          <div class="fg full">
+            <label class="field-label" for="b_student_name">學員姓名 <span class="req">*</span></label>
+            <p class="field-hint">請輸入真實姓名，以便官方對帳及點名</p>
+            <input type="text" id="b_student_name" name="student_name" placeholder="王小明" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="b_phone">聯絡電話 <span class="req">*</span></label>
+            <p class="field-hint">請輸入行動電話，若有課程異動方便聯絡</p>
+            <input type="tel" id="b_phone" name="phone" placeholder="0912345678" maxlength="10" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="b_email">Email <span class="req">*</span></label>
+            <p class="field-hint">請輸入正確信箱，以便發送上課通知</p>
+            <input type="email" id="b_email" name="email" placeholder="your@email.com" required>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label">報名課程</label>
+            <div class="product-row">
+              <div>
+                <div class="product-name">成人芭蕾期課班</div>
+                <div class="product-detail">8 堂課 · 2026/7/3–8/21 每週五 14:00–15:30</div>
+              </div>
+              <div class="product-price">NT$3,600</div>
+            </div>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label" for="b_remit_code">匯款末五碼 <span class="req">*</span></label>
+            <p class="field-hint">請輸入匯款末五碼供查帳用</p>
+            <input type="text" id="b_remit_code" name="remit_code" placeholder="例：12345" maxlength="5" required>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label">注意事項確認 <span class="req">*</span></label>
+            <div class="check-list">
+              <label class="check-item">
+                <input type="checkbox" name="notice1" required value="我有17fit的帳戶，可讓後台匯入本活動方案的點數">
+                <span class="check-item-text">我有 17fit 的帳戶，可讓後台匯入本活動方案的點數</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="notice2" required value="我知道匯款後要告知官方Line小編">
+                <span class="check-item-text">我知道匯款後要告知官方 Line 小編（@jennylin）</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="notice3" required value="我知道若無法來上課，JS無法補課，亦無法退費">
+                <span class="check-item-text">我知道若無法來上課，JS 無法補課，亦無法退費</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+        <div class="submit-area">
+          <p class="submit-note">送出後請留意 Email 確認信<br>如有問題請私訊 Line @jennylin</p>
+          <button type="submit" class="btn-submit" id="submit-btn-ballet">確認送出報名 →</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p>© 2026 JS Dance · 兒童舞蹈課程 · <a href="https://line.me/ti/p/@jennylin" target="_blank">聯絡我們 @jennylin</a></p>
@@ -759,7 +955,7 @@
 
   // ── FORM SUBMISSION → Google Sheets ──
   // 請將下方換成你的 Google Apps Script Web App URL
-  const SHEET_URL = '1D7gB_7KkCTIIfsx1DN92tEO6RavMxt8AovUVKYwgakc';
+  const SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
 
   document.getElementById('form-mv').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -844,6 +1040,61 @@
       timestamp: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
       course:    '兒童MV夏令營',
       parent_name:  form.parent_name.value.trim(),
+      student_name: form.student_name.value.trim(),
+      phone:        form.phone.value.trim(),
+      email:        form.email.value.trim(),
+      remit_code:   form.remit_code.value.trim(),
+      notice1: form.notice1.checked ? '✓' : '',
+      notice2: form.notice2.checked ? '✓' : '',
+      notice3: form.notice3.checked ? '✓' : '',
+    };
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      feedback.className = 'form-feedback show success';
+      feedback.textContent = '✅ 報名資料已送出！請記得加入 Line @jennylin 告知匯款，確認後即完成報名。';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.reset();
+    } catch (err) {
+      feedback.className = 'form-feedback show error';
+      feedback.textContent = '❌ 送出失敗，請稍後再試或直接聯絡 Line @jennylin。';
+    }
+
+    btn.textContent = '確認送出報名 →';
+    btn.disabled = false;
+  });
+
+  document.getElementById('form-ballet').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const feedback = document.getElementById('feedback-ballet');
+    const btn = document.getElementById('submit-btn-ballet');
+
+    const allRequired = form.querySelectorAll('[required]');
+    let valid = true;
+    allRequired.forEach(el => {
+      if (el.type === 'checkbox' && !el.checked) valid = false;
+      else if (el.type !== 'checkbox' && !el.value.trim()) valid = false;
+    });
+
+    if (!valid) {
+      feedback.className = 'form-feedback show error';
+      feedback.textContent = '⚠️ 請填寫所有必填欄位並勾選三項注意事項。';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    btn.textContent = '送出中…';
+    btn.disabled = true;
+
+    const payload = {
+      timestamp:    new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
+      course:       '成人芭蕾期課班',
       student_name: form.student_name.value.trim(),
       phone:        form.phone.value.trim(),
       email:        form.email.value.trim(),
