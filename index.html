@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Dance · 兒童舞蹈課程報名</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #aeaeb2;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --accent-light: #e8f0fe;
+    --warn: #ff6b35;
+    --warn-light: #fff3ee;
+    --green: #1a7a4a;
+    --green-light: #e8f8f0;
+    --border: rgba(0,0,0,0.08);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-lg: 0 24px 64px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.06);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --radius-xs: 8px;
+    --font: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,245,247,0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+    height: 52px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-inner {
+    width: 100%; max-width: 980px;
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 17px; font-weight: 600;
+    color: var(--text-primary); text-decoration: none; letter-spacing: -0.2px;
+  }
+  .nav-sub { font-size: 13px; color: var(--text-secondary); }
+
+  /* ── TABS NAV ── */
+  .tabs-bar {
+    background: rgba(245,245,247,0.88);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 52px; z-index: 90;
+  }
+  .tabs-inner {
+    max-width: 980px; margin: 0 auto;
+    padding: 0 24px;
+    display: flex; gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs-inner::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: none; border: none; border-bottom: 2px solid transparent;
+    padding: 14px 22px;
+    font-family: var(--font); font-size: 14px; font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.18s, border-color 0.18s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text-primary); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; }
+  .panel.active {
+    display: block;
+    animation: fadeUp 0.32s var(--ease);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO SECTION ── */
+  .page-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+  .course-hero {
+    background: linear-gradient(160deg, #0a0a1a 0%, #1a1040 40%, #2d1a6e 80%, #1a0a4a 100%);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 40px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    min-height: 280px;
+    display: flex; align-items: flex-end;
+  }
+
+  .hero-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 70% 40%, rgba(138,43,226,0.35) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 30% 60%, rgba(0,113,227,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-dots {
+    position: absolute; inset: 0; opacity: 0.15;
+    background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 40px 40px 40px;
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    padding: 5px 12px; border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700; letter-spacing: -0.8px; line-height: 1.15;
+    color: #ffffff; margin-bottom: 12px;
+  }
+
+  .hero-sub {
+    font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.75);
+    line-height: 1.65; max-width: 480px;
+  }
+
+  @media (max-width: 560px) {
+    .hero-content { padding: 28px 24px; }
+  }
+
+  /* ── INFO CARDS ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .info-card {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 20px 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+
+  .info-card-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-bottom: 6px;
+  }
+
+  .info-card-value {
+    font-size: 15px; font-weight: 500;
+    color: var(--text-primary); line-height: 1.35;
+  }
+
+  .info-card-value.big {
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.5px; color: var(--accent);
+  }
+
+  /* ── NOTICE BOX ── */
+  .notice-box {
+    background: var(--warn-light);
+    border: 1px solid rgba(255,107,53,0.2);
+    border-left: 4px solid var(--warn);
+    border-radius: var(--radius-xs);
+    padding: 18px 20px;
+    margin-bottom: 28px;
+  }
+
+  .notice-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--warn); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .notice-box p {
+    font-size: 14px; color: var(--text-secondary);
+    line-height: 1.65; margin-bottom: 4px;
+  }
+
+  .notice-box p:last-child { margin-bottom: 0; }
+
+  .account-box {
+    background: var(--text-primary);
+    color: #fff;
+    border-radius: var(--radius-xs);
+    padding: 16px 20px;
+    margin-top: 12px;
+    font-size: 15px;
+  }
+
+  .account-box .label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 4px;
+  }
+
+  .account-box .number {
+    font-size: 19px; font-weight: 700; letter-spacing: 0.5px;
+  }
+
+  /* ── LINE BOX ── */
+  .line-box {
+    background: #06C755;
+    border-radius: var(--radius-xs);
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .line-icon {
+    font-size: 24px; flex-shrink: 0;
+  }
+
+  .line-box p {
+    font-size: 14px; color: #fff; font-weight: 500; line-height: 1.5;
+  }
+
+  .line-id {
+    font-size: 17px; font-weight: 700; letter-spacing: 0.02em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 36px 0;
+  }
+
+  /* ── FORM ── */
+  .form-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 44px 44px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 560px) {
+    .form-card { padding: 28px 20px; }
+  }
+
+  .form-card-title {
+    font-size: 24px; font-weight: 700;
+    letter-spacing: -0.5px; margin-bottom: 4px;
+  }
+
+  .form-card-sub {
+    font-size: 14px; color: var(--text-secondary);
+    font-weight: 300; margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  @media (max-width: 520px) {
+    .form-grid { grid-template-columns: 1fr; }
+  }
+
+  .fg { display: flex; flex-direction: column; gap: 6px; }
+  .fg.full { grid-column: 1 / -1; }
+
+  label.field-label {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--text-secondary);
+  }
+
+  label.field-label .req { color: var(--accent); margin-left: 2px; }
+
+  .field-hint {
+    font-size: 11px; color: var(--text-tertiary);
+    font-weight: 300; margin-top: -2px;
+  }
+
+  input[type=text], input[type=tel], input[type=email] {
+    font-family: var(--font);
+    font-size: 16px; font-weight: 400;
+    color: var(--text-primary);
+    background: var(--bg);
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-xs);
+    padding: 12px 14px;
+    width: 100%; outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder { color: var(--text-tertiary); }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.14);
+    background: var(--surface);
+  }
+
+  /* product row */
+  .product-row {
+    background: var(--bg);
+    border-radius: var(--radius-xs);
+    padding: 16px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    border: 1.5px solid var(--border);
+  }
+
+  .product-name { font-size: 15px; font-weight: 600; }
+  .product-detail { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .product-price {
+    font-size: 18px; font-weight: 700;
+    color: var(--accent); white-space: nowrap;
+  }
+
+  /* checkboxes */
+  .check-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .check-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--bg);
+    border: 1.5px solid transparent;
+    border-radius: var(--radius-xs);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .check-item:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .check-item input[type=checkbox] {
+    flex-shrink: 0; width: 18px; height: 18px;
+    margin-top: 1px; cursor: pointer;
+    accent-color: var(--accent);
+  }
+
+  .check-item-text {
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary); line-height: 1.5;
+  }
+
+  /* submit area */
+  .submit-area {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 16px; margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .submit-note { font-size: 12px; color: var(--text-tertiary); line-height: 1.5; }
+
+  .btn-submit {
+    background: var(--accent);
+    color: #fff; border: none;
+    border-radius: 100px;
+    padding: 14px 36px;
+    font-family: var(--font); font-size: 16px; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    letter-spacing: -0.1px;
+  }
+
+  .btn-submit:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 6px 20px rgba(0,113,227,0.38);
+    transform: translateY(-1px);
+  }
+
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit:disabled { opacity: 0.6; pointer-events: none; }
+
+  /* feedback */
+  .form-feedback {
+    display: none;
+    align-items: flex-start; gap: 12px;
+    padding: 16px 18px;
+    border-radius: var(--radius-xs);
+    font-size: 14px; font-weight: 500;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .form-feedback.show { display: flex; }
+  .form-feedback.success { background: var(--green-light); color: var(--green); border: 1px solid rgba(26,122,74,0.2); }
+  .form-feedback.error { background: #fff0f0; color: #c0392b; border: 1px solid #f5b7b1; }
+
+  /* ── SUMMER CAMP HERO VARIANT ── */
+  .course-hero.summer {
+    background: linear-gradient(160deg, #0a1a0a 0%, #0d3020 40%, #1a6e3a 75%, #e8a020 100%);
+  }
+  .course-hero.summer .hero-glow {
+    background: radial-gradient(ellipse 60% 50% at 65% 35%, rgba(255,180,0,0.35) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 45% at 25% 65%, rgba(0,180,80,0.28) 0%, transparent 70%);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px 24px 48px;
+    font-size: 13px; color: var(--text-tertiary);
+    border-top: 1px solid var(--border);
+  }
+
+  footer a { color: var(--text-tertiary); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">JS Dance</a>
+    <span class="nav-sub">課程報名</span>
+  </div>
+</nav>
+
+<!-- TAB BAR -->
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="tab-mv">兒童MV專攻班</button>
+    <button class="tab-btn" data-tab="tab-summer">兒童MV夏令營</button>
+  </div>
+</div>
+
+<!-- ══ PANEL: 兒童MV專攻班 ══ -->
+<div class="panel active" id="tab-mv">
+  <div class="page-wrap">
+
+    <!-- HERO -->
+    <div class="course-hero">
+      <div class="hero-glow"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-content">
+        <div class="hero-badge">💃 2026 期間限定</div>
+        <h1 class="hero-title">兒童MV<br>專攻班</h1>
+        <p class="hero-sub">詳細的舞步拆解、隊形變換、動作調整修正，讓孩子們在學習舞蹈的過程中認識自己、培養自信心。</p>
+      </div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">課程費用</div>
+        <div class="info-card-value big">NT$2,400</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">課堂數</div>
+        <div class="info-card-value big">8 堂</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">上課日期</div>
+        <div class="info-card-value">2026/5/6 (三)<br>~2026/6/24 (三)</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">上課時間</div>
+        <div class="info-card-value">18:00 – 19:00</div>
+      </div>
+    </div>
+
+    <!-- PAYMENT NOTICE -->
+    <div class="notice-box">
+      <div class="notice-title">💳 報名須先完成匯款</div>
+      <p>請先匯款 <strong>2,400元／人</strong> 到以下帳戶，以匯款作為報名依據。</p>
+      <div class="account-box">
+        <div class="label">匯款帳號</div>
+        <div class="number">台灣企銀（050）84162122729</div>
+      </div>
+    </div>
+
+    <!-- LINE NOTICE -->
+    <div class="line-box">
+      <div class="line-icon">💬</div>
+      <p>
+        匯款後請加入官方 Line@<br>
+        <span class="line-id">@jennylin</span>
+        <br>告知小編您已匯款，確認無誤後才算報名完成。
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- REGISTRATION FORM -->
+    <div class="form-card">
+      <div id="feedback-mv" class="form-feedback"></div>
+      <h2 class="form-card-title">填寫報名資料</h2>
+      <p class="form-card-sub">請確認已完成匯款後再填寫此表單，我們將以 Email 發送報名確認通知。</p>
+
+      <form id="form-mv" novalidate>
+        <div class="form-grid">
+
+          <div class="fg">
+            <label class="field-label" for="parent_name">家長姓名 <span class="req">*</span></label>
+            <p class="field-hint">請輸入真實姓名，以便官方對帳及點名</p>
+            <input type="text" id="parent_name" name="parent_name" placeholder="王小明" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="student_name">學員姓名 <span class="req">*</span></label>
+            <p class="field-hint">請輸入學員真實姓名，以便老師點名</p>
+            <input type="text" id="student_name" name="student_name" placeholder="王小華" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="phone">聯絡電話 <span class="req">*</span></label>
+            <p class="field-hint">請輸入行動電話，若有課程異動方便聯絡</p>
+            <input type="tel" id="phone" name="phone" placeholder="0912345678" maxlength="10" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="email">Email <span class="req">*</span></label>
+            <p class="field-hint">請輸入正確信箱，以便發送上課通知</p>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label">報名課程</label>
+            <div class="product-row">
+              <div>
+                <div class="product-name">兒童MV專攻班</div>
+                <div class="product-detail">8 堂課 · 2026/5/6 – 6/24 每週三 18:00-19:00</div>
+              </div>
+              <div class="product-price">NT$2,400</div>
+            </div>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label" for="remit_code">匯款末五碼 <span class="req">*</span></label>
+            <p class="field-hint">請輸入匯款末五碼供查帳用</p>
+            <input type="text" id="remit_code" name="remit_code" placeholder="例：12345" maxlength="5" required>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label">注意事項確認 <span class="req">*</span></label>
+            <div class="check-list">
+              <label class="check-item">
+                <input type="checkbox" name="notice1" required value="我有17fit的帳戶，可讓後台匯入本活動方案的點數">
+                <span class="check-item-text">我有 17fit 的帳戶，可讓後台匯入本活動方案的點數</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="notice2" required value="我知道匯款後要告知官方Line小編">
+                <span class="check-item-text">我知道匯款後要告知官方 Line 小編（@jennylin）</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="notice3" required value="我知道若無法來上課，JS無法補課，亦無法退費">
+                <span class="check-item-text">我知道若無法來上課，JS 無法補課，亦無法退費</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+        <div class="submit-area">
+          <p class="submit-note">送出後請留意 Email 確認信<br>如有問題請私訊 Line @jennylin</p>
+          <button type="submit" class="btn-submit" id="submit-btn">確認送出報名 →</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ PANEL: 兒童MV夏令營 ══ -->
+<div class="panel" id="tab-summer">
+  <div class="page-wrap">
+
+    <!-- HERO -->
+    <div class="course-hero summer">
+      <div class="hero-glow"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-content">
+        <div class="hero-badge">☀️ 2026 暑假限定</div>
+        <h1 class="hero-title">兒童MV<br>夏令營</h1>
+        <p class="hero-sub">連續五天韓國流行歌曲教學，用簡單有趣的方式分解動作、學習團隊隊形變換、個人動作調整修正，讓孩子們在學習舞蹈的過程中認識自己、培養自信心。</p>
+      </div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">課程費用</div>
+        <div class="info-card-value big">NT$3,000</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">課堂數</div>
+        <div class="info-card-value big">5 堂</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">上課日期</div>
+        <div class="info-card-value">2026/7/27 (一)<br>~2026/7/31 (五)</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">上課時間</div>
+        <div class="info-card-value">14:00 – 16:00</div>
+      </div>
+    </div>
+
+    <!-- PAYMENT NOTICE -->
+    <div class="notice-box">
+      <div class="notice-title">💳 報名須先完成匯款</div>
+      <p>請先匯款 <strong>3,000元／人</strong> 到以下帳戶，以匯款作為報名依據。</p>
+      <div class="account-box">
+        <div class="label">匯款帳號</div>
+        <div class="number">台灣企銀（050）84162122729</div>
+      </div>
+    </div>
+
+    <!-- LINE NOTICE -->
+    <div class="line-box">
+      <div class="line-icon">💬</div>
+      <p>
+        匯款後請加入官方 Line@<br>
+        <span class="line-id">@jennylin</span>
+        <br>告知小編您已匯款，確認無誤後才算報名完成。
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- REGISTRATION FORM -->
+    <div class="form-card">
+      <div id="feedback-summer" class="form-feedback"></div>
+      <h2 class="form-card-title">填寫報名資料</h2>
+      <p class="form-card-sub">請確認已完成匯款後再填寫此表單，我們將以 Email 發送報名確認通知。</p>
+
+      <form id="form-summer" novalidate>
+        <div class="form-grid">
+
+          <div class="fg">
+            <label class="field-label" for="s_parent_name">家長姓名 <span class="req">*</span></label>
+            <p class="field-hint">請輸入真實姓名，以便官方對帳及點名</p>
+            <input type="text" id="s_parent_name" name="parent_name" placeholder="王小明" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="s_student_name">學員姓名 <span class="req">*</span></label>
+            <p class="field-hint">請輸入學員真實姓名，以便老師點名</p>
+            <input type="text" id="s_student_name" name="student_name" placeholder="王小華" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="s_phone">聯絡電話 <span class="req">*</span></label>
+            <p class="field-hint">請輸入行動電話，若有課程異動方便聯絡</p>
+            <input type="tel" id="s_phone" name="phone" placeholder="0912345678" maxlength="10" required>
+          </div>
+
+          <div class="fg">
+            <label class="field-label" for="s_email">Email <span class="req">*</span></label>
+            <p class="field-hint">請輸入正確信箱，以便發送上課通知</p>
+            <input type="email" id="s_email" name="email" placeholder="your@email.com" required>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label">報名課程</label>
+            <div class="product-row">
+              <div>
+                <div class="product-name">兒童MV夏令營</div>
+                <div class="product-detail">5 堂課 · 2026/7/27–7/31 連續五天 14:00–16:00</div>
+              </div>
+              <div class="product-price">NT$3,000</div>
+            </div>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label" for="s_remit_code">匯款末五碼 <span class="req">*</span></label>
+            <p class="field-hint">請輸入匯款末五碼供查帳用</p>
+            <input type="text" id="s_remit_code" name="remit_code" placeholder="例：12345" maxlength="5" required>
+          </div>
+
+          <div class="fg full">
+            <label class="field-label">注意事項確認 <span class="req">*</span></label>
+            <div class="check-list">
+              <label class="check-item">
+                <input type="checkbox" name="notice1" required value="我有17fit的帳戶，可讓後台匯入本活動方案的點數">
+                <span class="check-item-text">我有 17fit 的帳戶，可讓後台匯入本活動方案的點數</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="notice2" required value="我知道匯款後要告知官方Line小編">
+                <span class="check-item-text">我知道匯款後要告知官方 Line 小編（@jennylin）</span>
+              </label>
+              <label class="check-item">
+                <input type="checkbox" name="notice3" required value="我知道若無法來上課，JS無法補課，亦無法退費">
+                <span class="check-item-text">我知道若無法來上課，JS 無法補課，亦無法退費</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+        <div class="submit-area">
+          <p class="submit-note">送出後請留意 Email 確認信<br>如有問題請私訊 Line @jennylin</p>
+          <button type="submit" class="btn-submit" id="submit-btn-summer">確認送出報名 →</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 JS Dance · 兒童舞蹈課程 · <a href="https://line.me/ti/p/@jennylin" target="_blank">聯絡我們 @jennylin</a></p>
+</footer>
+
+<script>
+  // ── TAB SWITCHING ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // ── FORM SUBMISSION → Google Sheets ──
+  // 請將下方換成你的 Google Apps Script Web App URL
+  const SHEET_URL = '1D7gB_7KkCTIIfsx1DN92tEO6RavMxt8AovUVKYwgakc';
+
+  document.getElementById('form-mv').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const feedback = document.getElementById('feedback-mv');
+    const btn = document.getElementById('submit-btn');
+
+    // validate required
+    const allRequired = form.querySelectorAll('[required]');
+    let valid = true;
+    allRequired.forEach(el => {
+      if (el.type === 'checkbox' && !el.checked) valid = false;
+      else if (el.type !== 'checkbox' && !el.value.trim()) valid = false;
+    });
+
+    if (!valid) {
+      feedback.className = 'form-feedback show error';
+      feedback.textContent = '⚠️ 請填寫所有必填欄位並勾選三項注意事項。';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    btn.textContent = '送出中…';
+    btn.disabled = true;
+
+    const payload = {
+      timestamp: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
+      course:    '兒童MV專攻班',
+      parent_name:  form.parent_name.value.trim(),
+      student_name: form.student_name.value.trim(),
+      phone:        form.phone.value.trim(),
+      email:        form.email.value.trim(),
+      remit_code:   form.remit_code.value.trim(),
+      notice1: form.notice1.checked ? '✓' : '',
+      notice2: form.notice2.checked ? '✓' : '',
+      notice3: form.notice3.checked ? '✓' : '',
+    };
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      feedback.className = 'form-feedback show success';
+      feedback.textContent = '✅ 報名資料已送出！請記得加入 Line @jennylin 告知匯款，確認後即完成報名。';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.reset();
+    } catch (err) {
+      feedback.className = 'form-feedback show error';
+      feedback.textContent = '❌ 送出失敗，請稍後再試或直接聯絡 Line @jennylin。';
+    }
+
+    btn.textContent = '確認送出報名 →';
+    btn.disabled = false;
+  });
+  document.getElementById('form-summer').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const feedback = document.getElementById('feedback-summer');
+    const btn = document.getElementById('submit-btn-summer');
+
+    const allRequired = form.querySelectorAll('[required]');
+    let valid = true;
+    allRequired.forEach(el => {
+      if (el.type === 'checkbox' && !el.checked) valid = false;
+      else if (el.type !== 'checkbox' && !el.value.trim()) valid = false;
+    });
+
+    if (!valid) {
+      feedback.className = 'form-feedback show error';
+      feedback.textContent = '⚠️ 請填寫所有必填欄位並勾選三項注意事項。';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    btn.textContent = '送出中…';
+    btn.disabled = true;
+
+    const payload = {
+      timestamp: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
+      course:    '兒童MV夏令營',
+      parent_name:  form.parent_name.value.trim(),
+      student_name: form.student_name.value.trim(),
+      phone:        form.phone.value.trim(),
+      email:        form.email.value.trim(),
+      remit_code:   form.remit_code.value.trim(),
+      notice1: form.notice1.checked ? '✓' : '',
+      notice2: form.notice2.checked ? '✓' : '',
+      notice3: form.notice3.checked ? '✓' : '',
+    };
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      feedback.className = 'form-feedback show success';
+      feedback.textContent = '✅ 報名資料已送出！請記得加入 Line @jennylin 告知匯款，確認後即完成報名。';
+      feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.reset();
+    } catch (err) {
+      feedback.className = 'form-feedback show error';
+      feedback.textContent = '❌ 送出失敗，請稍後再試或直接聯絡 Line @jennylin。';
+    }
+
+    btn.textContent = '確認送出報名 →';
+    btn.disabled = false;
+  });
+</script>
+</body>
+</html>
